@@ -17,26 +17,23 @@ class Ticket:
             raise ValueError("title must be a string")
 
         title = value.strip()
-        if not title:  # catches "" and whitespace-only like "   " or "\n\t"
+        if not title:  
             raise ValueError("title must not be blank")
 
         return title
 
     def validate_affected_users(value):
-        # bool is a subclass of int in Python, so exclude it explicitly
         if isinstance(value, bool):
             raise ValueError("affected_users must be a positive integer")
 
-        # Accept real ints, or strings that look like whole numbers
         if isinstance(value, int):
             number = value
         elif isinstance(value, str):
             text = value.strip()
-            if not text.isdigit():  # rejects "", "abc", "-5", "3.5", "1e3"
+            if not text.isdigit(): 
                 raise ValueError("affected_users must be a positive integer")
             number = int(text)
         else:
-            # floats (including 5.0), None, lists, etc.
             raise ValueError("affected_users must be a positive integer")
 
         if number <= 0:
